@@ -20,10 +20,6 @@ export class AppComponent {
         Validators.required
       ])]
     });
-
-    this.todos.push(new Todo(1, 'passear com o cachorro', false));
-    this.todos.push(new Todo(2, 'ir ao mercado', false));
-    this.todos.push(new Todo(3, 'cortar cabelo', true));
   }
 
   remove(todo: Todo) {
@@ -45,8 +41,20 @@ export class AppComponent {
   add() {
     const title = this.form.controls.title.value;
     const id = this.todos.length + 1;
-    const todo: Todo = new Todo(id, title, false);
+    const todo = new Todo(id, title, false);
 
     this.todos.push(todo);
+    this.save();
+    this.clear();
+  }
+
+  clear() {
+    this.form.reset();
+  }
+
+  save() {
+    const data = JSON.stringify(this.todos);
+
+    localStorage.setItem('todos', data);
   }
 }
